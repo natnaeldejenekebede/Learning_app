@@ -3,31 +3,32 @@ package gemini
 import (
 	"Brilliant/config"
 	"context"
-	"fmt"
 	"log"
+	"os"
 
 	"github.com/google/generative-ai-go/genai"
 	option "google.golang.org/api/option"
 )
 
 func GetTextModel() *genai.GenerativeModel {
-	// Load environment variables
-	env, err := config.Load()
+	// Load environment variables from .env file (if using dotenv)
+	err := godotenv.Load()
 	if err != nil {
-		panic(err)
+		log.Fatal("Error loading .env file")
 	}
-	apiKey := os.Getenv("GEMINI_API_KEY")
-if apiKey == "" {
-    log.Fatal("API Key not found. Please set the GEMINI_API_KEY environment variable.")
-}
-	fmt.Println("API Key: ", apiKey)
 
+	// Load the API key from environment variable
+	apiKey := os.Getenv("GEMINI_API_KEY")
+	if apiKey == "" {
+		log.Fatal("API Key not found. Please set the GEMINI_API_KEY environment variable.")
+	}
+
+	// Proceed with the API client creation
 	ctx := context.Background()
 	client, err := genai.NewClient(ctx, option.WithAPIKey(apiKey))
 	if err != nil {
 		log.Fatal(err)
 	}
-	// defer client.Close()
 
 	model := client.GenerativeModel("gemini-pro")
 	model.SafetySettings = []*genai.SafetySetting{
@@ -43,7 +44,6 @@ if apiKey == "" {
 			Category:  genai.HarmCategorySexuallyExplicit,
 			Threshold: genai.HarmBlockMediumAndAbove,
 		},
-
 		{
 			Category:  genai.HarmCategoryDangerousContent,
 			Threshold: genai.HarmBlockMediumAndAbove,
@@ -53,23 +53,24 @@ if apiKey == "" {
 }
 
 func GetImageModel() *genai.GenerativeModel {
-	// Load environment variables
-	env, err := config.Load()
+	// Load environment variables from .env file (if using dotenv)
+	err := godotenv.Load()
 	if err != nil {
-		panic(err)
+		log.Fatal("Error loading .env file")
 	}
-	apiKey := os.Getenv("GEMINI_API_KEY")
-if apiKey == "" {
-    log.Fatal("API Key not found. Please set the GEMINI_API_KEY environment variable.")
-}
-	fmt.Println("API Key: ", apiKey)
 
+	// Load the API key from environment variable
+	apiKey := os.Getenv("GEMINI_API_KEY")
+	if apiKey == "" {
+		log.Fatal("API Key not found. Please set the GEMINI_API_KEY environment variable.")
+	}
+
+	// Proceed with the API client creation
 	ctx := context.Background()
 	client, err := genai.NewClient(ctx, option.WithAPIKey(apiKey))
 	if err != nil {
 		log.Fatal(err)
 	}
-	// defer client.Close()
 
 	model := client.GenerativeModel("gemini-pro-vision")
 
@@ -86,7 +87,6 @@ if apiKey == "" {
 			Category:  genai.HarmCategorySexuallyExplicit,
 			Threshold: genai.HarmBlockMediumAndAbove,
 		},
-
 		{
 			Category:  genai.HarmCategoryDangerousContent,
 			Threshold: genai.HarmBlockMediumAndAbove,
