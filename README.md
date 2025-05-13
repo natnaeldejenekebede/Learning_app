@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Brilliant AI-Driven Learning Web Application for High School and Primary School
 
 ## Table of Contents
@@ -73,3 +74,7 @@ Overall, this project has been a remarkable learning experience, reinforcing the
 - postgresql
 - render
 - typescript
+=======
+# Learning_app
+An AI-powered educational platform addressing resource gaps in Ethiopian schools by providing dynamic lessons, interactive quizzes, and automated summarization tools.
+>>>>>>> 79ba1dea12c6c38ff51352ecadd5b07dc865a0f2
