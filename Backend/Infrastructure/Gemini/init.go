@@ -16,7 +16,10 @@ func GetTextModel() *genai.GenerativeModel {
 	if err != nil {
 		panic(err)
 	}
-	apiKey := env.Gemin_Api_key
+	apiKey := os.Getenv("GEMINI_API_KEY")
+if apiKey == "" {
+    log.Fatal("API Key not found. Please set the GEMINI_API_KEY environment variable.")
+}
 	fmt.Println("API Key: ", apiKey)
 
 	ctx := context.Background()
